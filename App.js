@@ -1,27 +1,32 @@
-import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, TextInput} from 'react-native';
+import BookCount from './components/BookCount';
 
 export default function App() {
+  const [totalCount, setTotalCount] = useState(0);
+  const [readingCount, setReadingCount] = useState(0);
+  const [readCount, setReadCount] = useState(0);
+
   return (
     <View style={styles.container} >
       <SafeAreaView />
       <View style={styles.borderBottom}>
          <Text style={styles.headerText}>Book Worm</Text>
       </View>
-      <View style={styles.header} />
+      <View style={styles.header}>
+        <View style={styles.textInput}>
+          <TextInput style={styles.textInputField} />
+        </View>
+        <TouchableOpacity style={styles.buttonPosition}>
+          <View style={styles.bookImage}>
+            <Text style={styles.bookImageText}>+</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
       <View style={styles.borderTop}>
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>Total</Text>
-          <Text>0</Text>
-        </View>
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>Reading</Text>
-          <Text>0</Text>
-        </View>
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>Read</Text>
-          <Text>0</Text>
-        </View>
+      <BookCount title='Total' count={totalCount} />
+       <BookCount title='Reading' count={readingCount}/>
+       <BookCount title='Read' count={readCount} />
       </View>
       <SafeAreaView />
     </View>
@@ -38,11 +43,11 @@ const styles = StyleSheet.create({
    backgroundColor: 'red' 
  },
  borderBottom: {
-    height: 70, 
-    borderBottomWidth: 0.5, 
-    borderBottomColor: '#E9E9E9', 
-    alignItems: 'center',
-    justifyContent: 'center'
+   height: 70, 
+   borderBottomWidth: 0.5, 
+   borderBottomColor: '#E9E9E9', 
+   alignItems: 'center',
+   justifyContent: 'center'
  },
  header: {
    flex: 1,
@@ -50,7 +55,24 @@ const styles = StyleSheet.create({
  }, 
  headerText: {
    fontSize: 24
+ },
+ textInput: {
+   height: 50,
+ },
+ textInputField: {
 
+ },
+ bookImage: {
+   width: 50,
+   height: 50,
+   borderRadius: 25,
+   backgroundColor: '#AAD1E6',
+   alignItems: 'center',
+   justifyContent: 'center'
+ },
+ bookImageText: {
+   color: 'white',
+   fontSize: 30
  },
  borderTop: {
    height: 70, 
@@ -65,5 +87,10 @@ const styles = StyleSheet.create({
  },
  footerText: {
    fontSize: 20
+ },
+ buttonPosition: {
+   position: 'absolute',
+   bottom: 20,
+   right: 20
  }
 });
