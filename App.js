@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, TextInput} from 'react-native';
+import {Ionicons} from '@expo/vector-icons';
+
 import BookCount from './components/BookCount';
 
 export default function App() {
@@ -15,7 +17,21 @@ export default function App() {
       </View>
       <View style={styles.header}>
         <View style={styles.textInput}>
-          <TextInput style={styles.textInputField} />
+          <TextInput 
+            style={styles.textInputField}
+            placeholder='Enter Book Name'
+            placeholderTextColor='grey'
+          />
+          <TouchableOpacity>
+            <View style={styles.checkBox}>
+              <Ionicons name='ios-checkmark' color='white' size={40} />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={[styles.checkBox, {backgroundColor: '#deada5'}]}>
+              <Ionicons name='ios-close' color='white' size={40} />
+            </View>
+          </TouchableOpacity>
         </View>
         <TouchableOpacity style={styles.buttonPosition}>
           <View style={styles.bookImage}>
@@ -24,7 +40,7 @@ export default function App() {
         </TouchableOpacity>
       </View>
       <View style={styles.borderTop}>
-      <BookCount title='Total' count={totalCount} />
+       <BookCount title='Total' count={totalCount} />
        <BookCount title='Reading' count={readingCount}/>
        <BookCount title='Read' count={readCount} />
       </View>
@@ -58,9 +74,19 @@ const styles = StyleSheet.create({
  },
  textInput: {
    height: 50,
+   flexDirection: 'row'
  },
  textInputField: {
-
+   flex: 1,
+   backgroundColor: '#ececec',
+   paddingLeft: 10
+ },
+ checkBox: {
+   width: 50,
+   height: 50,
+   backgroundColor: '#a5deba',
+   alignItems: 'center',
+   justifyContent: 'center'
  },
  bookImage: {
    width: 50,
