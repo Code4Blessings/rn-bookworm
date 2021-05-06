@@ -1,150 +1,117 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, TextInput} from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
-
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, TextInput} from 'react-native';
 import BookCount from './components/BookCount';
-
-export default function App() {
-  const [totalCount, setTotalCount] = useState(0);
-  const [readingCount, setReadingCount] = useState(0);
-  const [readCount, setReadCount] = useState(0);
-  const [isAddNewBookVisible, setIsAddNewBookVisible] = useState(false);
-  const [textInputData, setTextInputData] = useState('');
-  const [books, setBooks] = useState([]);
-
-  const showAddNewBook = () => {
-    setIsAddNewBookVisible(true);
+import {Ionicons} from '@expo/vector-icons';
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      totalCount: 0,
+      readingCount: 0,
+      readCount: 0,
+      isAddNewBookVisible: false,
+      textInputData: '',
+      books: []
+    };
   }
 
-  const hideAddNewBook = () => {
-    setIsAddNewBookVisible(false);
+  showAddNewBook = () => {
+    this.setState({isAddNewBookVisible: true});
   }
 
-  const inputData = (text) => {
-    setTextInputData(text)
+  hideAddNewBook = () => {
+   this.setState({isAddNewBookVisible: false});
   }
 
-  const addBook = (book) => {
-    setBooks([...books, book])
-    console.log(books)
+  addBook = book => {
+   this.setState((state, props) => ({
+     books: [...state.books, book]
+   }), () => {
+     console.log(this.state.books)
+   });
   }
 
 
-  return (
-    <View style={styles.container} >
+  render() {
+    return (
+   <View style={{flex: 1}}>
       <SafeAreaView />
-      <View style={styles.borderBottom}>
-         <Text style={styles.headerText}>Book Worm</Text>
+      <View style={{
+        height: 70, 
+        borderBottomWidth: 0.5, 
+        borderBottomColor: '#E9E9E9', 
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+         <Text style={{fontSize: 24}}>Book Worm</Text>
       </View>
-      <View style={styles.header}>
-         {isAddNewBookVisible && (
-        <View style={styles.textInput}>
+      <View style={{flex: 1}}>
+         {this.state.isAddNewBookVisible && (
+        <View style={{height: 50, flexDirection: 'row'}}>
           <TextInput 
-            style={styles.textInputField}
-            onChangedText={inputData}
+            style={{flex: 1, backgroundColor: '#ececec', paddingLeft: 10}}
+            onChangeText={(text)=> this.setState({textInputData: text})}
             placeholder='Enter Book Name'
             placeholderTextColor='grey'
           />
 
-          <TouchableOpacity onPress={() => addBook(textInputData)}>
-            <View style={styles.checkBox}>
+          <TouchableOpacity onPress={() => this.addBook(this.state.textInputData)}>
+            <View style={{
+              width: 50, 
+              height: 50,
+              backgroundColor: '#a5deba',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
               <Ionicons name='ios-checkmark' color='white' size={40} />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={hideAddNewBook}>
-            <View style={[styles.checkBox, {backgroundColor: '#deada5'}]}>
+          <TouchableOpacity onPress={this.hideAddNewBook}>
+            <View style={{
+              width: 50,
+              height: 50,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#deada5'
+            }}>
               <Ionicons name='ios-close' color='white' size={40} />
             </View>
           </TouchableOpacity>
         </View>
         )}
         <TouchableOpacity
-            style={styles.buttonPosition}
-            onPress={showAddNewBook}
+            style={{
+              position: 'absolute',
+              bottom: 20,
+              right: 20
+            }}
+            onPress={this.showAddNewBook}
         >
-          <View style={styles.bookImage}>
-            <Text style={styles.bookImageText}>+</Text>
+          <View style={{
+            width: 50,
+            height: 50,
+            borderRadius: 25,
+            backgroundColor: '#AAD1E6',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <Text style={{color: 'white',fontSize: 30}}>+</Text>
           </View>
         </TouchableOpacity>
       </View>
-      <View style={styles.borderTop}>
-       <BookCount title='Total' count={totalCount} />
-       <BookCount title='Reading' count={readingCount}/>
-       <BookCount title='Read' count={readCount} />
+      <View style={{   
+        height: 70, 
+        borderTopWidth: 0.5, 
+        borderTopColor: '#E9E9E9',
+        flexDirection: 'row',
+      }}>
+       <BookCount title='Total' count={this.state.totalCount} />
+       <BookCount title='Reading' count={this.state.readingCount}/>
+       <BookCount title='Read' count={this.state.readCount} />
       </View>
       <SafeAreaView />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
- container: {
-   flex: 1,
- },
- box: {
-   height: 50,
-   width: 50,
-   backgroundColor: 'red'
- },
- borderBottom: {
-   height: 70, 
-   borderBottomWidth: 0.5, 
-   borderBottomColor: '#E9E9E9', 
-   alignItems: 'center',
-   justifyContent: 'center'
- },
- header: {
-   flex: 1,
-   
- }, 
- headerText: {
-   fontSize: 24
- },
- textInput: {
-   height: 50,
-   flexDirection: 'row'
- },
- textInputField: {
-   flex: 1,
-   backgroundColor: '#ececec',
-   paddingLeft: 10
- },
- checkBox: {
-   width: 50,
-   height: 50,
-   backgroundColor: '#a5deba',
-   alignItems: 'center',
-   justifyContent: 'center'
- },
- bookImage: {
-   width: 50,
-   height: 50,
-   borderRadius: 25,
-   backgroundColor: '#AAD1E6',
-   alignItems: 'center',
-   justifyContent: 'center'
- },
- bookImageText: {
-   color: 'white',
-   fontSize: 30
- },
- borderTop: {
-   height: 70, 
-   borderTopWidth: 0.5, 
-   borderTopColor: '#E9E9E9',
-   flexDirection: 'row',
- },
- footer: {
-   flex: 1,
-   alignItems: 'center',
-   justifyContent: 'center'
- },
- footerText: {
-   fontSize: 20
- },
- buttonPosition: {
-   position: 'absolute',
-   bottom: 20,
-   right: 20
- }
-});
+}
