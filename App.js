@@ -8,6 +8,27 @@ export default function App() {
   const [totalCount, setTotalCount] = useState(0);
   const [readingCount, setReadingCount] = useState(0);
   const [readCount, setReadCount] = useState(0);
+  const [isAddNewBookVisible, setIsAddNewBookVisible] = useState(false);
+  const [textInputData, setTextInputData] = useState('');
+  const [books, setBooks] = useState([]);
+
+  const showAddNewBook = () => {
+    setIsAddNewBookVisible(true);
+  }
+
+  const hideAddNewBook = () => {
+    setIsAddNewBookVisible(false);
+  }
+
+  const inputData = (text) => {
+    setTextInputData(text)
+  }
+
+  const addBook = (book) => {
+    setBooks([...books, book])
+    console.log(books)
+  }
+
 
   return (
     <View style={styles.container} >
@@ -16,24 +37,31 @@ export default function App() {
          <Text style={styles.headerText}>Book Worm</Text>
       </View>
       <View style={styles.header}>
+         {isAddNewBookVisible && (
         <View style={styles.textInput}>
           <TextInput 
             style={styles.textInputField}
+            onChangedText={inputData}
             placeholder='Enter Book Name'
             placeholderTextColor='grey'
           />
-          <TouchableOpacity>
+
+          <TouchableOpacity onPress={() => addBook(textInputData)}>
             <View style={styles.checkBox}>
               <Ionicons name='ios-checkmark' color='white' size={40} />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={hideAddNewBook}>
             <View style={[styles.checkBox, {backgroundColor: '#deada5'}]}>
               <Ionicons name='ios-close' color='white' size={40} />
             </View>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.buttonPosition}>
+        )}
+        <TouchableOpacity
+            style={styles.buttonPosition}
+            onPress={showAddNewBook}
+        >
           <View style={styles.bookImage}>
             <Text style={styles.bookImageText}>+</Text>
           </View>
@@ -51,12 +79,12 @@ export default function App() {
 
 const styles = StyleSheet.create({
  container: {
-   flex: 1, 
+   flex: 1,
  },
  box: {
    height: 50,
    width: 50,
-   backgroundColor: 'red' 
+   backgroundColor: 'red'
  },
  borderBottom: {
    height: 70, 
