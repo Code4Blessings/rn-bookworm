@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import PropTypes from 'prop-types';
 
 const BookCount = ({title, count}) => {
     return(
@@ -21,5 +22,14 @@ const styles = StyleSheet.create({
    fontSize: 20
  }
 });
+
+BookCount.proptypes = {
+  count: PropTypes.number.isRequired,
+  title: PropTypes.string
+};
+
+BookCount.defaultProps = {
+  title: 'Title'
+}
 
 export default BookCount;

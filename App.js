@@ -11,6 +11,7 @@ import {
 import {Ionicons} from '@expo/vector-icons';
 
 import BookCount from './components/BookCount';
+import CustomActionButton from './components/CustomActionButton';
 
 export default class App extends Component {
   constructor(props) {
@@ -58,17 +59,11 @@ export default class App extends Component {
       <View style={{flex:1, justifyContent: 'center, ', padding: 10}}>
           <Text>{item}</Text>
       </View>
-        <TouchableOpacity onPress={() => this.markAsRead(item, index)}>
-            <View style={{
-              width: 100, 
-              height: 50,
-              backgroundColor: '#a5deba',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              <Text style={{fontWeight: 'bold', color: 'white'}}>Mark As Read</Text>
-            </View>
-          </TouchableOpacity>
+      <CustomActionButton 
+        style={{width: 100, backgroundColor: '#a5deba', }}
+        onPress={() => this.markAsRead(item, index)}>
+        <Text style={{fontWeight: 'bold', color: 'white'}}>Mark As Read</Text>
+      </CustomActionButton>
     </View>
   )
 
@@ -96,29 +91,16 @@ export default class App extends Component {
             placeholder='Enter Book Name'
             placeholderTextColor='grey'
           />
+          <CustomActionButton 
+              style={{backgroundColor: '#a5deba'}}
+              onPress={() => this.addBook(this.state.textInputData)}>
+             <Ionicons name='ios-checkmark' color='white' size={40} />
+          </CustomActionButton>
 
-          <TouchableOpacity onPress={() => this.addBook(this.state.textInputData)}>
-            <View style={{
-              width: 50, 
-              height: 50,
-              backgroundColor: '#a5deba',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              <Ionicons name='ios-checkmark' color='white' size={40} />
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.hideAddNewBook}>
-            <View style={{
-              width: 50,
-              height: 50,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: '#deada5'
-            }}>
-              <Ionicons name='ios-close' color='white' size={40} />
-            </View>
-          </TouchableOpacity>
+           <CustomActionButton onPress={this.hideAddNewBook}>
+             <Ionicons name='ios-close' color='white' size={40} />
+          </CustomActionButton>
+          
         </View>
         )}
 
