@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, TextInput} from 'react-native';
-import BookCount from './components/BookCount';
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  SafeAreaView, 
+  TouchableOpacity, 
+  TextInput,
+  FlatList
+} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
+
+import BookCount from './components/BookCount';
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -25,11 +35,42 @@ export default class App extends Component {
 
   addBook = book => {
    this.setState((state, props) => ({
-     books: [...state.books, book]
+     books: [...state.books, book],
+     totalCount: state.totalCount + 1,
+     readingCount: state.readCount + 1,
    }), () => {
      console.log(this.state.books)
    });
   }
+
+  markAsRead = (selectedBook, index) => {
+    let newList = this.state.books.filter((book) => book !== selectedBook);
+
+    this.setState(prevState => ({
+      books: newList,
+      readingCount: prevState.readingCount - 1,
+      readCount: prevState.readCount + 1
+    }));
+  }
+
+  renderItem = (item, index) => (
+    <View style={{height: 50, flexDirection: 'row'}}>
+      <View style={{flex:1, justifyContent: 'center, ', padding: 10}}>
+          <Text>{item}</Text>
+      </View>
+        <TouchableOpacity onPress={() => this.markAsRead(item, index)}>
+            <View style={{
+              width: 100, 
+              height: 50,
+              backgroundColor: '#a5deba',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <Text style={{fontWeight: 'bold', color: 'white'}}>Mark As Read</Text>
+            </View>
+          </TouchableOpacity>
+    </View>
+  )
 
 
   render() {
@@ -45,6 +86,7 @@ export default class App extends Component {
       }}>
          <Text style={{fontSize: 24}}>Book Worm</Text>
       </View>
+
       <View style={{flex: 1}}>
          {this.state.isAddNewBookVisible && (
         <View style={{height: 50, flexDirection: 'row'}}>
@@ -79,6 +121,19 @@ export default class App extends Component {
           </TouchableOpacity>
         </View>
         )}
+
+       <FlatList 
+          data={this.state.books}
+          renderItem={({ item }, index) => this.renderItem(item, index)}
+          keyExtractor={(item, index) => index.toString()}
+          ListEmptyComponent={
+            <View style={{marginTop: 50, alignItems: 'center',}}>
+              <Text style={{fontWeight: 'bold'}}>Not Reading Any Books Now</Text>
+            </View>
+          }
+       />
+
+
         <TouchableOpacity
             style={{
               position: 'absolute',

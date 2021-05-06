@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 
-const BookCount = (props) => {
+const BookCount = ({title, count}) => {
     return(
         <View style={styles.footer}>
-          <Text style={styles.footerText}>{props.title}</Text>
-          <Text>{props.count}</Text>
+          <Text style={styles.footerText}>{title}</Text>
+          <Text>{count}</Text>
         </View>
     );
     
