@@ -39,13 +39,14 @@ export default class App extends Component {
      books: [...state.books, book],
      totalCount: state.totalCount + 1,
      readingCount: state.readCount + 1,
+     isAddNewBookVisible: false
    }), () => {
      console.log(this.state.books)
    });
   }
 
   markAsRead = (selectedBook, index) => {
-    let newList = this.state.books.filter((book) => book !== selectedBook);
+    let newList = this.state.books.filter(book => book !== selectedBook);
 
     this.setState(prevState => ({
       books: newList,
@@ -55,14 +56,14 @@ export default class App extends Component {
   }
 
   renderItem = (item, index) => (
-    <View style={{height: 50, flexDirection: 'row'}}>
-      <View style={{flex:1, justifyContent: 'center, ', padding: 10}}>
+    <View style={styles.listItemContainer}>
+      <View style={styles.listItems}>
           <Text>{item}</Text>
       </View>
       <CustomActionButton 
-        style={{width: 100, backgroundColor: '#a5deba', }}
+        style={styles.markAsReadButton}
         onPress={() => this.markAsRead(item, index)}>
-        <Text style={{fontWeight: 'bold', color: 'white'}}>Mark As Read</Text>
+        <Text style={styles.listItemText}>Mark As Read</Text>
       </CustomActionButton>
     </View>
   )
@@ -72,27 +73,21 @@ export default class App extends Component {
     return (
    <View style={{flex: 1}}>
       <SafeAreaView />
-      <View style={{
-        height: 70, 
-        borderBottomWidth: 0.5, 
-        borderBottomColor: '#E9E9E9', 
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-         <Text style={{fontSize: 24}}>Book Worm</Text>
+      <View style={styles.topContainer}>
+         <Text style={styles.headerText}>Book Worm</Text>
       </View>
 
-      <View style={{flex: 1}}>
+      <View style={styles.header}>
          {this.state.isAddNewBookVisible && (
-        <View style={{height: 50, flexDirection: 'row'}}>
+        <View style={styles.textInput}>
           <TextInput 
-            style={{flex: 1, backgroundColor: '#ececec', paddingLeft: 10}}
+            style={styles.textInputField}
             onChangeText={(text)=> this.setState({textInputData: text})}
             placeholder='Enter Book Name'
             placeholderTextColor='grey'
           />
           <CustomActionButton 
-              style={{backgroundColor: '#a5deba'}}
+              style={styles.checkButton}
               onPress={() => this.addBook(this.state.textInputData)}>
              <Ionicons name='ios-checkmark' color='white' size={40} />
           </CustomActionButton>
@@ -110,38 +105,19 @@ export default class App extends Component {
           keyExtractor={(item, index) => index.toString()}
           ListEmptyComponent={
             <View style={{marginTop: 50, alignItems: 'center',}}>
-              <Text style={{fontWeight: 'bold'}}>Not Reading Any Books Now</Text>
+              <Text style={styles.listIsEmptyText}>Not Reading Any Books Now</Text>
             </View>
           }
        />
 
-
-        <TouchableOpacity
-            style={{
-              position: 'absolute',
-              bottom: 20,
-              right: 20
-            }}
-            onPress={this.showAddNewBook}
-        >
-          <View style={{
-            width: 50,
-            height: 50,
-            borderRadius: 25,
-            backgroundColor: '#AAD1E6',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <Text style={{color: 'white',fontSize: 30}}>+</Text>
-          </View>
-        </TouchableOpacity>
+        <CustomActionButton 
+          position='right' style={styles.addButton} 
+          onPress={this.showAddNewBook}>
+          <Text style={styles.addButtonText}>+</Text>
+        </CustomActionButton>
+        
       </View>
-      <View style={{   
-        height: 70, 
-        borderTopWidth: 0.5, 
-        borderTopColor: '#E9E9E9',
-        flexDirection: 'row',
-      }}>
+      <View style={styles.footer}>
        <BookCount title='Total' count={this.state.totalCount} />
        <BookCount title='Reading' count={this.state.readingCount}/>
        <BookCount title='Read' count={this.state.readCount} />
@@ -150,5 +126,27 @@ export default class App extends Component {
     </View>
   );
 }
-
 }
+
+const styles = StyleSheet.create({
+ topContainer: {
+    height: 70, 
+    borderBottomWidth: 0.5, 
+    borderBottomColor: '#E9E9E9', 
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  header: {flex: 1},
+  headerText: {fontSize: 24},
+  textInput: {height: 50, flexDirection: 'row'},
+  textInputField: {flex: 1, backgroundColor: '#ececec', paddingLeft: 10},
+  checkButton: {backgroundColor: '#a5deba'},
+  addButton: {backgroundColor: '#AAD1E6', borderRadius: 25},
+  addButtonText: {color: 'white',fontSize: 30},
+  footer: {height: 70, borderTopWidth: 0.5, borderTopColor: '#E9E9E9', flexDirection: 'row'},
+  listItemContainer: {height: 50, flexDirection: 'row'},
+  listItems: {flex:1, justifyContent: 'center', padding: 10},
+  markAsReadButton: {width: 100, backgroundColor: '#a5deba'},
+  listItemText: {fontWeight: 'bold', color: 'white'},
+  listIsEmptyText: {fontWeight: 'bold', color: 'white'}
+});
