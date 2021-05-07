@@ -2,6 +2,8 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 
+import colors from '../assets/colors';
+
 function getPosition(position) {
     switch(position) {
         case 'left':
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
         height: 50,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#deada5'
+        backgroundColor: colors.bgError
     }
 });
 
