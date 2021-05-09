@@ -8,14 +8,32 @@ import {
   FlatList
 } from 'react-native';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
-import WelcomeScreen from './screens/AppSwitchNavigator/WelcomeScreen'
+
+import WelcomeScreen from './screens/AppSwitchNavigator/WelcomeScreen';
+import HomeScreen from './screens/HomeScreen';
+import SignUpScreen from './screens/SignUpScreen';
+
+/* 
+- AppSwitchNavigator
+    -WelcomeScreen
+      -SignUpScreen
+    -HomeScreen
+*/
+
+const LoginStackNavigator = createStackNavigator({
+  WelcomeScreen,
+  SignUpScreen
+})
 
 
 const App = () => <AppContainer />;
 
 const AppSwitchNavigator = createSwitchNavigator({
-  WelcomeScreen
+  LoginStackNavigator,
+  HomeScreen,
+  
 })
 
 const AppContainer = createAppContainer(AppSwitchNavigator)

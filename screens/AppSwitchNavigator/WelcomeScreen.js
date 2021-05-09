@@ -23,14 +23,14 @@ export default class WelcomeScreen extends Component {
           <CustomActionButton 
             style={styles.loginButton}
             title='Login' 
-            onPress={() => alert('Login')
+            onPress={() => this.props.navigation.navigate('HomeScreen')
           }>
             <Text style={styles.loginButtonText} >Log In</Text>
           </CustomActionButton>
           <CustomActionButton 
             style={styles.signUpButton}
             title='Signup' 
-            onPress={() => alert('Sign Up')
+            onPress={() => this.props.navigation.navigate('SignUpScreen')
           }>
             <Text style={styles.loginButtonText}>Sign Up</Text>
           </CustomActionButton>
