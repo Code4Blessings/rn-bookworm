@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default class SignUpScreen extends Component {
+export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,7 +11,7 @@ export default class SignUpScreen extends Component {
   render() {
     return (
       <View style={styles.signUpContainer}>
-        <Text>SignUp Screen</Text>
+        <Text>Login Screen</Text>
       </View>
     );
   }

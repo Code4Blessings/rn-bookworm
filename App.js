@@ -14,8 +14,10 @@ import {Ionicons} from '@expo/vector-icons';
 
 import WelcomeScreen from './screens/AppSwitchNavigator/WelcomeScreen';
 import HomeScreen from './screens/HomeScreen';
-import SignUpScreen from './screens/SignUpScreen';
+import LoginScreen from './screens/LoginScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import CustomerDrawerComponent from './screens/DrawNavigator/CustomerDrawerComponent';
+
 
 /* 
 - AppSwitchNavigator
@@ -31,8 +33,8 @@ const LoginStackNavigator = createStackNavigator({
       header: null
     }
   },
-  SignUpScreen: {
-    screen: SignUpScreen,
+  LoginScreen: {
+    screen: LoginScreen,
     navigationOptions: {
       headerBackTitleVisible: false
     }
@@ -57,6 +59,8 @@ const AppDrawerNavigator = createDrawerNavigator({
       drawerIcon: () => <Ionicons name='ios-settings' size={24} />
     }
   }
+}, {
+  contentComponent: CustomerDrawerComponent
 })
 
 const AppSwitchNavigator = createSwitchNavigator({

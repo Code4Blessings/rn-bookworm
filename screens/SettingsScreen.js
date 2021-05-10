@@ -14,7 +14,7 @@ export default class SettingsScreen extends Component {
     return (
       <View style={styles.settingsContainer}>
          <CustomActionButton 
-            style={styles.loginButton}
+            style={styles.logoutButton}
             title='Login' 
             onPress={() => this.props.navigation.navigate('WelcomeScreen')
           }>
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    loginButton: {
+    logoutButton: {
       width: 200, 
       backgroundColor: colors.bgMain, 
       borderWidth: 0.5, 
