@@ -17,6 +17,7 @@ import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import CustomerDrawerComponent from './screens/DrawNavigator/CustomerDrawerComponent';
+import colors from './assets/colors';
 
 
 /* 
@@ -36,10 +37,17 @@ const LoginStackNavigator = createStackNavigator({
   LoginScreen: {
     screen: LoginScreen,
     navigationOptions: {
-      headerBackTitleVisible: false
+      headerBackTitleVisible: false,
     }
   }
-})
+}, {
+  mode: 'modal',
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: colors.bgMain
+    }
+  }
+});
 
 
 const App = () => <AppContainer />;
