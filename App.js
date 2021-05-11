@@ -11,6 +11,8 @@ import {createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import {Ionicons} from '@expo/vector-icons';
+import * as firebase from 'firebase/app';
+import {firebaseConfig} from './config/config';
 
 import WelcomeScreen from './screens/AppSwitchNavigator/WelcomeScreen';
 import HomeScreen from './screens/HomeScreen';
@@ -26,6 +28,20 @@ import colors from './assets/colors';
       -SignUpScreen
     -HomeScreen
 */
+class App extends Component {
+  constructor() {
+    super();
+    this.initializeFirebase()
+  }
+  initializeFirebase = () => {
+    firebase.initializeApp(firebaseConfig);
+  }
+  render() {
+    return (
+      <AppContainer />
+    )
+  }
+}
 
 const LoginStackNavigator = createStackNavigator({
   WelcomeScreen: {
@@ -48,9 +64,6 @@ const LoginStackNavigator = createStackNavigator({
     }
   }
 });
-
-
-const App = () => <AppContainer />;
 
 const AppDrawerNavigator = createDrawerNavigator({
   HomeScreen: {

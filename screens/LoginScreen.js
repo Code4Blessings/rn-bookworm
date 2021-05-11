@@ -3,11 +3,16 @@ import { View, Text, StyleSheet, TextInput } from 'react-native';
 
 import colors from '../assets/colors';
 import CustomActionButton from '../components/CustomActionButton';
+import * as firebase from 'firebase/app';
+import 'firebase/auth'
 
 export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      email: '',
+      password: '',
+      isLoading: false
     };
   }
 
